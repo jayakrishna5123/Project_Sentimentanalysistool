@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+
+# Jupyter system files (if using notebooks)
+.ipynb_checkpoints/
+
+# OS/system-specific files
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional, personal)
+.vscode/
+
+# Environment files (if you ever use .env)
+.env

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Background image with blur */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('{{ url_for('static', filename='img3.jpg') }}') no-repeat center center fixed;
+    background-size: 100% 100%;
+    filter: blur(2.25px);  
+    z-index: -1;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reveal the Emotion Behind Your Text!</h1>
+
+        <form method="POST" action="/analyze">
+            <textarea name="text" rows="5" cols="50" placeholder="Write your text here..."></textarea>
+            <br>
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if result %}
+        <div class="results-wrapper">
+            <div class="result-box">
+                <h3>TextBlob Result</h3>
+                <p><strong>Sentiment:</strong> {{ result['TextBlob']['label'] }}</p>
+                <p><strong>Polarity Score:</strong> {{ result['TextBlob']['polarity'] }}</p>
+                <p class="emoji">
+                    {% if result['TextBlob']['label'] == 'Positive' %}
+                        😊
+                    {% elif result['TextBlob']['label'] == 'Negative' %}
+                        😞
+                    {% else %}
+                        😐
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="result-box">
+                <h3>VADER Result</h3>
+                <p><strong>Sentiment:</strong> {{ result['VADER']['label'] }}</p>
+                <p><strong>Compound Score:</strong> {{ result['VADER']['compound_score'] }}</p>
+                <p class="emoji">
+                    {% if result['VADER']['label'] == 'Positive' %}
+                        😊
+                    {% elif result['VADER']['label'] == 'Negative' %}
+                        😞
+                    {% else %}
+                        😐
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
